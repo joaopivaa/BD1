@@ -44,11 +44,11 @@ VALUES (100, 'Lucélia', 'SP');
 
 -- INSERINDO VALORES NA TABELA CLIENTE
 INSERT INTO cliente (nome, email, id_cidade, endereco, numero, bairro, data_nasc)
-VALUES ('Murilo Silva', 'murilo@gmail.com', 10, 'Rua Pedro Cavalo', 750, 'Portal da Perola', '10\08\1963');
+VALUES ('Murilo Silva', 'murilo@gmail.com', 10, 'Rua Pedro Cavalo', 750, 'Portal da Perola', '1963-08-10');
 
 -- INSERINDO VALORES NA TABELA CLIENTE
 INSERT INTO cliente (nome, email, id_cidade, endereco, numero, bairro, data_nasc)
-VALUES ('Cássio Neto', 'cassioneto@gmail.com', 10, 'Rua Tiradentes', 20, 'Campos Limpos', '5\12\1983');
+VALUES ('Cássio Neto', 'cassioneto@gmail.com', 10, 'Rua Tiradentes', 20, 'Campos Limpos', '1983-12-5');
 
 -- VISUALIZAR VALORES DA TABELA CIDADE
 select * from cidade ;

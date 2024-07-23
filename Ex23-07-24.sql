@@ -1,7 +1,5 @@
 -- CRIAÇÃO DO BANCO DE DADOS
 create database clube ;
-DEFAULT CHARSET = utf8 ;
-DEFAULT COLLATE = utf8_general_ci ;
 
 -- SELECIONANDO O BANCO DE DADOS
 use clube ;
@@ -14,7 +12,7 @@ create table socio (
     cidade varchar(30) DEFAULT 'Birigui',
     estado char(2) DEFAULT 'SP',
     cep varchar(9),
-    fone varchar(13),
+    fone varchar(15),
     dt date NOT NULL,
     PRIMARY KEY (cod_socio)
 );
