@@ -20,7 +20,7 @@ CREATE TABLE produto (
     cod_produto int auto_increment NOT NULL,
     nome varchar(40) NOT NULL,
     cod_fornec int NOT NULL,
-    preco_uni NUMERIC(10.2),
+    preco_uni NUMERIC(10,2),
     qtde int,
     PRIMARY KEY (cod_produto),
     CONSTRAINT fk_fornecedor_produto
@@ -129,3 +129,118 @@ INSERT INTO fornecedor (cod_fornec, nome, fone, cidade, estado, email, pais) VAL
 
 -- EXCLUINDO TODOS OS FORNCEDORES BRASILEIROS QUE NÃO SÃO DO ESTADO DE SP
 DELETE FROM fornecedor WHERE pais = 'Brasil' AND estado != 'SP';
+
+
+-- OUTRO BANCO DE DADOS --
+
+-- CRIAÇÃO DO BANCO DE DADOS
+CREATE DATABASE escritorio_piva ;
+
+-- SELECIONANDO O BANCO DE DADOS
+USE escritorio_piva ;
+
+-- CRIAÇÃO DA TABELA DEPARTAMENTO
+CREATE TABLE departamento (
+    num_depto INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    localizacao VARCHAR(100)
+);
+
+-- CRIAÇÃO DA TABELA GERENTE
+CREATE TABLE gerente (
+    cod_gerente INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(40),
+    num_depto INT,
+    CONSTRAINT fk_gerente_departamento
+        FOREIGN KEY (num_depto) REFERENCES departamento (num_depto)
+);
+
+-- CRIAÇÃO DA TABELA EMPREGADO
+CREATE TABLE empregado (
+    cod_emp INT PRIMARY KEY AUTO_INCREMENT,
+    nome varchar(40),
+    endereco varchar(40),
+    cidade varchar(30),
+    estado char(2),
+    fone varchar(20),
+    dt_admissao DATE, 
+    num_depto INT,
+    salario DECIMAL(10,2),
+    CONSTRAINT fk_empregado_departamento
+        FOREIGN KEY (num_depto) REFERENCES departamento (num_depto)
+);
+
+-- CRIAÇÃO DA TABELA PROJETO
+CREATE TABLE projeto (
+    num_projeto INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    descricao VARCHAR(250),
+    num_depto int,
+    CONSTRAINT fk_projeto_departamento
+        FOREIGN KEY (num_depto) REFERENCES departamento (num_depto)
+);
+
+-- CRIAÇÃO DA TABELA TRABALHA EM
+CREATE TABLE trabalha_Em (
+    cod_emp INT,
+    num_projeto INT,
+    total_horas_semanais DECIMAL(4,2),
+    PRIMARY KEY (cod_emp, num_projeto),
+    CONSTRAINT fk_empregado_trabalha
+        FOREIGN KEY (cod_emp) REFERENCES empregado (cod_emp),
+    CONSTRAINT fk_projeto_trabalha
+        FOREIGN KEY (num_projeto) REFERENCES projeto (num_projeto)
+);
+
+-- INSERINDO DEPARTAMENTOS NA TABELA DEPARTAMENTO
+INSERT INTO departamento (nome, localizacao) VALUES
+('Recursos Humanos', 'Bloco A'),
+('Desenvolvimento', 'Bloco B'),
+('Marketing', 'Bloco C');
+
+-- INSERINDO GERENTES NA TABELA GERENTE
+INSERT INTO gerente (nome, num_depto) VALUES
+('Luva de Pedreiro', 1),
+('Senhor dos Aneis', 2),
+('Amostradinho', 3);
+
+-- INSERINDO EMPREGADOS NA TABELA EMPREGADOS
+INSERT INTO empregado (nome, endereco, cidade, estado, fone, dt_admissao, num_depto, salario) VALUES
+('Cristiano Ronaldo', 'Rua Aclimação , Nº 27', 'Guarulhos', 'SP', '(18) 11111-1111', '2020-01-15', 1, 3245.73),
+('John Kennedy', 'Av dos Estados, Nº 892', 'Parati', 'RJ', '(11) 22222-2222', '2019-06-01', 2, 4329.98),
+('Kaik Rocha', 'Rua Fundadores, Nº 71', 'Belo Horizonte', 'MG', '(31) 33333-3333', '2021-03-20', 3, 3817.31);
+
+-- INSERINDO PROJETOS NA TABELA PROJETO
+INSERT INTO projeto (nome, descricao, num_depto) VALUES
+('GymFit', 'Desenvolvimento de software', 2),
+('Atrações Fodas', 'Campanha de marketing', 3),
+('Jubileu na Turquia', 'Treinamento de RH', 1);
+
+-- INSERINDO VALORES NA TABELA TRABALHA_EM
+INSERT INTO trabalha_Em (cod_emp, num_projeto, total_horas_semanais) VALUES
+(1, 3, 20),
+(2, 1, 30),
+(3, 2, 25);
+
+-- VISUALIZAR NOME E LOCALIZACAO DOS DEPARTAMENTOS
+SELECT nome, localizacao FROM departamento ;
+
+-- VISUALIZAR OS DADOS DE EMPREGADOS COM SALARIO MAIOR OU IGUAL A 3000
+SELECT * FROM empregado WHERE salario >= 3000 ;
+
+-- VISUALIZAR O NOME DOS GERENTES
+SELECT nome FROM gerente ;
+
+-- VISUALIZAR O NOME, SALARIO E SALARIO ATUALIZADO NA TABELA EMPREGADO
+SELECT nome, salario, salario + (salario * 0.10) AS 'salario atualizado' FROM empregado ;
+
+-- ATUALIZAR O SALARIO DE TODOS OS EMPREGADOS EM 10%
+UPDATE empregado SET
+    salario = salario + (salario * 0.10) ;
+
+-- ADICIONAR O CAMPO TIPO_PROJETO NA TABELA PROJETO
+ALTER TABLE projeto ADD tipo_projeto VARCHAR(15);
+
+-- ADICIONAR VALORES EM TIPO_PROJETO PARA TODOS OS PROJETOS
+UPDATE projeto SET
+    tipo_projeto = 'grande';
