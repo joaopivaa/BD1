@@ -14,7 +14,6 @@
 -- INNER JOIN cidade ci ON f.idcidade = ci.idcidade
 -- WHERE cp.situcao = 'Aberto' ;
 
-
 SELECT * FROM curso ;
 
 SELECT * FROM aluno ;
@@ -75,11 +74,12 @@ INNER JOIN curso c ON c.id = a.id_curso
 WHERE a.nome LIKE '%r%'
 ORDER BY a.matricula DESC; 
 
-18) Buscar nome e a descrição do curso, nome e a dt de nascimento do aluno
-no qual o nome do aluno tem a letra r no nome, ordenado por matricula 
-decrescente
-19) Buscar a quantidade de cursos cadastrados
-20) Listar as cidades dos alunos sem repetições dos nomes da cidade
-21) Listar todas as cargas horárias cadastradas sem repetições
-22) Buscar a maior e a menor carga horária cadastrada
-23) Buscar a média das cargas horárias
+SELECT COUNT(*) AS QUANTIDADE FROM curso ;
+
+SELECT DISTINCT cidade FROM aluno ;
+
+SELECT DISTINCT carga_horaria FROM curso ORDER BY carga_horaria ASC;
+
+SELECT MAX(carga_horaria) AS MAIOR, MIN(carga_horaria) AS MENOR FROM curso ;
+
+SELECT AVG(carga_horaria) AS MEDIA FROM curso DISTINCT;
