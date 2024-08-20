@@ -12,7 +12,7 @@ LEFT JOIN cidade cd ON cd.idCidade = cl.idCidade
 WHERE cl.nome LIKE '%Santos%' ;
 
 SELECT cl.nome, SUM(i.qtde * p.valor) as 'Valor nota' FROM cliente cl
-JOIN nota n ON n.codigo_cliente = cl.codigo
+JOIN nota n ON n.codigoCliente = cl.codigo
 JOIN item i ON i.numero_nota = n.numero
 JOIN produto p ON p.codigo = i.codigo_produto
 GROUP BY cl.nome ORDER BY 'Valor Nota' ;
